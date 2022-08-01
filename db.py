@@ -21,23 +21,20 @@ def add_event(name, day, month):
 
  # select_event function bascially selects the event with current_date.   
 
-def select_event():
-    cur.execute("SELECT name,day,month FROM reminders WHERE extract(day from CURRENT_DATE)=day AND extract(month from CURRENT_DATE)=month;")
+def select_events():
+    query=("SELECT name, day, month FROM reminders WHERE extract(day from CURRENT_DATE)=day AND extract(month from CURRENT_DATE)=month;")
+    cur.execute(query)
+    events = cur.fetchall()
+    con.commit()
+    return events
     
-    con.commit()    
-
-# remove_event function bascially removes an event if already exists in the table
-def remove_event():
-    cur.execute("IF name,day,month EXISTS DELETE FROM reminders ")
-    print("THE EVENT ALREADY EXISTS SO REMOVED")
-    con.commit()   
 
 if __name__ == "__main__" :
     con = connect_todatabase('reminders')    
     cur = getcursor(con)
-    r = add_event('birthday', 30, 7)
-    z = select_event()
-
+    r = add_event('cap"s birthday', 1, 8)
+    events = select_events()
+    print(events)
 
 
 
