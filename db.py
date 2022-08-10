@@ -21,22 +21,21 @@ def add_event(name, day, month):
 
  # select_event function bascially selects the event with current_date.   
 
-def select_events():
-    query=("SELECT name,day,month FROM reminders WHERE extract(day from CURRENT_DATE)=day AND extract(month from CURRENT_DATE)=month;")
+def select_events(within_days):
+    query=("SELECT DISTINCT name,day,month FROM reminders WHERE day>extract(day from CURRENT_DATE) AND day<extract(day from CURRENT_DATE)+{} AND extract(month from CURRENT_DATE)=month;".format(within_days))
     cur.execute(query)
-    events = cur.fetchone()
+    events = cur.fetchall()
     con.commit()
-    return events
-    
-    
+    return events   
 
 if __name__ == "__main__" :
     con = connect_todatabase('reminders')    
     cur = getcursor(con)
-    r = add_event('caps birthday', 4, 9)
-
-    events = select_events()
+    r = add_event('r birthday', 10, 8)
+    events = select_events(2)
     print(events)
+
+
 
 
 
