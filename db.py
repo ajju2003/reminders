@@ -35,6 +35,7 @@ if __name__ == "__main__" :
     r = add_event(con,cur,'r_birthday', 11, 8) 
     events = select_events(con,cur,2)
     print(events)
+    
 
 
 
