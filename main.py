@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi import FastAPI, Form
-
+import db
 
 app = FastAPI()
 
@@ -31,8 +31,22 @@ async def root():
 
 @app.post("/save_event")
 async def save_event(event_name: str = Form(), day: int = Form(), month: int = Form()):
-    return{"event_name":event_name, "Day":day, "Month":month}
+    print(event_name,day,month)
+    con = db.connect_todatabase('reminders')
+    cur = db.getcursor(con)
+    return db.add_event(con,cur,event_name, day, month)
+
+
+
     
+
+
+
+
+
+
+
+
 
 
 
