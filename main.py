@@ -31,10 +31,14 @@ async def root():
 
 @app.post("/save_event")
 async def save_event(event_name: str = Form(), day: int = Form(), month: int = Form()):
-    print(event_name,day,month)
+    
     con = db.connect_todatabase('reminders')
     cur = db.getcursor(con)
-    return db.add_event(con,cur,event_name, day, month)
+    r =  db.add_event(con,cur,event_name, day, month)
+    print(r)
+    return db.select_events(con,cur,16)
+
+
 
 
 
